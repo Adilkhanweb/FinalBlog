@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+    Login
+{% endblock %}
+{% block content %}
+    <div class="row mx-auto">
+        <div class="col-md-6 offset-3 p-3 mt-xxl-5">
+            <form action="" method="post">
+                <h1 class="uk-heading-line"><span>Login</span></h1>
+                {% csrf_token %}
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_username">Username</label>
+                    <input type="text" id="id_username" class="form-control form-control-lg" name="username"/>
+                </div>
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_password">Password</label>
+                    <input type="password" id="id_password" name="password" class="form-control form-control-lg"/>
+                </div>
+
+                <div class="row mb-4">
+                </div>
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

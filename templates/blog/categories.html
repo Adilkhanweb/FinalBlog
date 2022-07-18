@@ -1,0 +1,8 @@
+<h1 class="uk-heading-bullet uk-text-bold">Categories</h1>
+<ul class="uk-list uk-list-large uk-list-striped">
+    {% for category in categories %}
+        <li>
+            <a href="{% url 'category-posts' category.slug %}" class="text-decoration-none"><h3>{{ category.name }}</h3></a>
+        </li>
+    {% endfor %}
+</ul>

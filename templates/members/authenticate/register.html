@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    Register
+{% endblock %}
+{% block content %}
+    <div class="row mx-auto">
+        <div class="col-md-6 offset-3 p-3 mt-xxl-5">
+            {% if form.errors %}
+                <div class="pt-2 uk-border-rounded text-danger border-danger" style="border: 1px solid">
+                    {{ form.errors }}
+                </div>
+            {% endif %}
+            <form action="{% url 'register' %}" method="post">
+                <h1 class="uk-heading-line"><span>Register</span></h1>
+                {% csrf_token %}
+                {#                <!-- Email input -->#}
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_username">{{ form.username.label }}</label>
+                    {% render_field form.username class+="form-control" %}
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_password1">{{ form.password1.label }}</label>
+                    {% render_field form.password1 class+="form-control" %}
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="id_password2">{{ form.password2.label }}</label>
+                    {% render_field form.password2 class+="form-control" %}
+                </div>
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block uk-align-right">Register</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

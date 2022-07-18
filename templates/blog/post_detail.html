@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <img src="{{ post.thumbnail.url }}" alt="" class="w-100">
+            <h1 class="uk-heading-line uk-text-center"><span>{{ post.title }} </span></h1>
+            <div>
+                <span><i class="fa fa-comments ms-2"></i> {{ object.get_comment_count }} </span>
+                <span><i class="fa fa-eye ms-2"></i> {{ object.get_view_count }} </span>
+                <span class="ms-2"><i class="fas fa-hashtag"></i> {{ post.category }}</span>
+                <a class="ms-2" href="{{ object.get_like_url }}">
+                    <i class="fa fa-thumbs-up fa-lg"></i> {{ object.get_like_count }}
+                </a>
+                <span class="uk-align-right">Posted {{ object.publish_date|timesince }} ago by @{{ post.author.username }}
+                    {% if post.last_updated %}
+                        | Last Upd: {{ post.last_updated|timesince }} ago
+                    {% endif %} </span>
+            </div>
+            <hr>
+            {{ post.content|safe }}
+
+            {% if request.user.is_authenticated %}
+                <h4 class="uk-heading-bullet my-4">Leave a comment below</h4>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% render_field form.content class+="form-control" %}
+                    <button type='submit' class='btn btn-primary mt-2 mb-8 uk-align-right'>Comment</button>
+                </form>
+            {% endif %}
+            <br>
+            <h4 class="uk-heading-bullet my-4">Comments:</h4>
+            <ul class="uk-list uk-list-striped">
+                {% for comment in post.comments %}
+                    <li><span class="uk-text-bold">@{{ comment.user.username }}</span>: {{ comment.content }}
+                        <span class="uk-align-right uk-text-muted">{{ comment.timestamp }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

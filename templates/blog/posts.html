@@ -1,0 +1,47 @@
+<h1 class="uk-heading-bullet uk-text-bold">Posts</h1>
+{% if posts %}
+    {% for post in posts %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img
+                            src="{{ post.thumbnail.url }}"
+                            alt=""
+                            class="img-fluid rounded-start"
+                            style="height: 100%;"
+                    />
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'detail' post.slug %}">{{ post.title }}</a>
+                            {% if post.author == user %}
+                                <div class="uk-align-right">
+                                    <a href="{% url 'update' post.slug %}" class="btn btn-sm btn-outline-primary">Update</a>
+                                    <a href="{% url 'delete' post.slug %}" class="btn btn-sm btn-danger">Delete</a>
+                                </div>
+                            {% endif %}
+                        </h5>
+                        <p class="card-text">
+                            {{ post.content|truncatechars:"180" }}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                {% if post.last_updated %}
+                                    Updated: {{ post.last_updated|timesince }} ago by: @{{ post.author.username }}
+                                {% else %}
+                                    Posted: {{ post.publish_date|timesince }} ago by: @{{ post.author.username }}
+                                {% endif %}
+                                <br>
+                                Category: {{ post.category }} <br>
+                                Likes: {{ post.get_like_count }} <br>
+                                Views: {{ post.get_view_count }}
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <h1>There is no posts yet</h1>
+{% endif %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% block title %}
+    Update Post
+{% endblock %}
+{% block content %}
+    {% if form.errors %}
+        <div class="pt-2 uk-border-rounded text-danger border-danger" style="border: 1px solid">
+            {{ form.errors }}
+        </div>
+    {% endif %}
+    <form action="" method="post" class="mt-5" enctype="multipart/form-data">
+        <h1 class="uk-heading-bullet">Update Post</h1>
+        {% csrf_token %}
+        {% for field in form %}
+            <label class="mb-1" for="id_{{ field.label|lower }}">{{ field.label }}</label>
+            {% render_field field class+="form-control mb-4" %}
+        {% endfor %}
+        <button type="submit" class="btn btn-primary uk-align-right">Update</button>
+    </form>
+{% endblock %}
